@@ -1,0 +1,189 @@
+###############################################################################
+# 設定預設行為，自動正規化換行符號
+###############################################################################
+* text=auto
+
+###############################################################################
+# 明確宣告文字檔案，並在 checkout 時正規化為 LF
+###############################################################################
+
+# 原始碼檔案
+*.cs     text diff=csharp
+*.cshtml text diff=html
+*.razor  text diff=html
+*.csx    text diff=csharp
+*.vb     text
+*.fs     text
+*.fsx    text
+
+# 腳本檔案
+*.sh     text eol=lf
+*.bash   text eol=lf
+*.ps1    text eol=crlf
+*.cmd    text eol=crlf
+*.bat    text eol=crlf
+
+# Web 檔案
+*.html   text diff=html
+*.css    text diff=css
+*.scss   text diff=css
+*.sass   text
+*.less   text
+*.js     text
+*.ts     text
+*.jsx    text
+*.tsx    text
+*.json   text
+*.xml    text
+*.svg    text
+
+# 設定檔案
+*.config          text
+*.conf            text
+*.ini             text
+.editorconfig     text
+.gitattributes    text
+.gitconfig        text
+.gitignore        text
+
+# 專案檔案
+*.csproj          text
+*.vbproj          text
+*.fsproj          text
+*.sln             text eol=crlf
+*.props           text
+*.targets         text
+*.ruleset         text
+*.projitems       text
+*.shproj          text
+*.dcproj          text
+
+# 文件檔案
+*.md              text diff=markdown
+*.txt             text
+*.rtf             text
+*.rst             text
+*.adoc            text
+
+# 資料檔案
+*.yml             text
+*.yaml            text
+*.toml            text
+
+###############################################################################
+# 二進制檔案（明確標示為 binary，Git 不應嘗試合併或 diff）
+###############################################################################
+
+# 圖片檔案
+*.png             binary
+*.jpg             binary
+*.jpeg            binary
+*.gif             binary
+*.ico             binary
+*.bmp             binary
+*.tif             binary
+*.tiff            binary
+*.webp            binary
+*.svg             text
+
+# 字型檔案
+*.ttf             binary
+*.otf             binary
+*.woff            binary
+*.woff2           binary
+*.eot             binary
+
+# 壓縮檔案
+*.zip             binary
+*.7z              binary
+*.gz              binary
+*.tar             binary
+*.rar             binary
+
+# 執行檔與函式庫
+*.exe             binary
+*.dll             binary
+*.so              binary
+*.dylib           binary
+*.app             binary
+*.a               binary
+*.lib             binary
+*.pdb             binary
+
+# 資料庫檔案
+*.db              binary
+*.sqlite          binary
+*.mdf             binary
+*.ldf             binary
+
+# Office 文件
+*.doc             binary
+*.docx            binary
+*.xls             binary
+*.xlsx            binary
+*.ppt             binary
+*.pptx            binary
+*.pdf             binary
+
+# 多媒體檔案
+*.mp3             binary
+*.mp4             binary
+*.wav             binary
+*.avi             binary
+*.mov             binary
+*.wmv             binary
+
+# 套件與編譯產物
+*.nupkg           binary
+*.snupkg          binary
+
+###############################################################################
+# .NET 專案特定設定
+###############################################################################
+
+# Visual Studio 解決方案檔案使用 CRLF
+*.sln             text eol=crlf merge=binary
+
+# 專案檔案合併策略（避免自動合併造成問題）
+*.csproj          merge=union
+*.vbproj          merge=union
+*.fsproj          merge=union
+
+###############################################################################
+# 差異和合併工具設定
+###############################################################################
+
+# C# 檔案使用 C# diff driver
+*.cs              diff=csharp
+
+# Visual Studio 解決方案檔案標記為 binary 以避免合併衝突
+# 如果需要手動合併，可以註解以下行
+# *.sln           merge=binary
+# *.csproj        merge=binary
+
+###############################################################################
+# 語言學家（Linguist）設定（用於 GitHub 語言統計）
+###############################################################################
+
+# 自動產生的檔案不計入語言統計
+*.designer.cs     linguist-generated=true
+*.Designer.cs     linguist-generated=true
+*.g.cs            linguist-generated=true
+*.g.i.cs          linguist-generated=true
+
+# 文件和供應商程式碼
+docs/**           linguist-documentation
+wwwroot/lib/**    linguist-vendored
+
+# 排除測試檔案
+**/obj/**         linguist-generated=true
+**/bin/**         linguist-generated=true
+
+###############################################################################
+# 匯出設定（.gitarchive）
+###############################################################################
+
+# 在建立檔案時不包含這些檔案
+.gitattributes    export-ignore
+.gitignore        export-ignore
+.editorconfig     export-ignore
