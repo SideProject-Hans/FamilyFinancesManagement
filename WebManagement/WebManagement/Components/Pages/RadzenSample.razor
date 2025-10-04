@@ -1,0 +1,94 @@
+@page "/radzen-sample"
+@rendermode InteractiveServer
+
+<PageTitle>Radzen 範例</PageTitle>
+
+<RadzenStack Gap="1rem">
+    <RadzenText TextStyle="TextStyle.H2">Radzen Blazor 元件範例</RadzenText>
+
+    <RadzenCard>
+        <RadzenStack Gap="0.5rem">
+            <RadzenText TextStyle="TextStyle.H5">表單範例</RadzenText>
+
+            <RadzenFormField Text="姓名">
+                <RadzenTextBox @bind-Value="@name" Placeholder="請輸入您的姓名" Style="width: 100%;" />
+            </RadzenFormField>
+
+            <RadzenFormField Text="電子郵件">
+                <RadzenTextBox @bind-Value="@email" Placeholder="請輸入電子郵件" Style="width: 100%;" />
+            </RadzenFormField>
+
+            <RadzenFormField Text="備註">
+                <RadzenTextArea @bind-Value="@notes" Rows="3" Placeholder="請輸入備註" Style="width: 100%;" />
+            </RadzenFormField>
+
+            <RadzenButton Text="送出" Icon="save" ButtonStyle="ButtonStyle.Primary" Click="@OnSubmit" />
+        </RadzenStack>
+    </RadzenCard>
+
+    <RadzenCard>
+        <RadzenStack Gap="0.5rem">
+            <RadzenText TextStyle="TextStyle.H5">按鈕範例</RadzenText>
+
+            <RadzenStack Orientation="Orientation.Horizontal" Gap="0.5rem" Wrap="FlexWrap.Wrap">
+                <RadzenButton Text="主要按鈕" ButtonStyle="ButtonStyle.Primary" />
+                <RadzenButton Text="次要按鈕" ButtonStyle="ButtonStyle.Secondary" />
+                <RadzenButton Text="成功按鈕" ButtonStyle="ButtonStyle.Success" />
+                <RadzenButton Text="危險按鈕" ButtonStyle="ButtonStyle.Danger" />
+                <RadzenButton Text="警告按鈕" ButtonStyle="ButtonStyle.Warning" />
+                <RadzenButton Text="資訊按鈕" ButtonStyle="ButtonStyle.Info" />
+            </RadzenStack>
+        </RadzenStack>
+    </RadzenCard>
+
+    <RadzenCard>
+        <RadzenStack Gap="0.5rem">
+            <RadzenText TextStyle="TextStyle.H5">警示訊息範例</RadzenText>
+
+            <RadzenAlert AlertStyle="AlertStyle.Success" Variant="Variant.Flat" Shade="Shade.Lighter">
+                <RadzenIcon Icon="check_circle" />
+                這是一個成功訊息！
+            </RadzenAlert>
+
+            <RadzenAlert AlertStyle="AlertStyle.Info" Variant="Variant.Flat" Shade="Shade.Lighter">
+                <RadzenIcon Icon="info" />
+                這是一個資訊訊息！
+            </RadzenAlert>
+
+            <RadzenAlert AlertStyle="AlertStyle.Warning" Variant="Variant.Flat" Shade="Shade.Lighter">
+                <RadzenIcon Icon="warning" />
+                這是一個警告訊息！
+            </RadzenAlert>
+
+            <RadzenAlert AlertStyle="AlertStyle.Danger" Variant="Variant.Flat" Shade="Shade.Lighter">
+                <RadzenIcon Icon="error" />
+                這是一個錯誤訊息！
+            </RadzenAlert>
+        </RadzenStack>
+    </RadzenCard>
+
+    @if (!string.IsNullOrEmpty(submittedMessage))
+    {
+        <RadzenCard>
+            <RadzenStack Gap="0.5rem">
+                <RadzenText TextStyle="TextStyle.H5">表單送出結果</RadzenText>
+
+                <RadzenAlert AlertStyle="AlertStyle.Info" Variant="Variant.Flat" Shade="Shade.Lighter">
+                    @submittedMessage
+                </RadzenAlert>
+            </RadzenStack>
+        </RadzenCard>
+    }
+</RadzenStack>
+
+@code {
+    private string name = string.Empty;
+    private string email = string.Empty;
+    private string notes = string.Empty;
+    private string submittedMessage = string.Empty;
+
+    private void OnSubmit()
+    {
+        submittedMessage = $"已收到您的資料：姓名 = {name}, 電子郵件 = {email}, 備註 = {notes}";
+    }
+}
