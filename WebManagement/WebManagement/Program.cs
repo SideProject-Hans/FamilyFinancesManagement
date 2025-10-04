@@ -1,6 +1,4 @@
-using Blazorise;
-using Blazorise.Bootstrap5;
-using Blazorise.Icons.FontAwesome;
+using Radzen;
 using WebManagement.Components;
 
 namespace WebManagement;
@@ -15,14 +13,8 @@ public class Program
         builder.Services.AddRazorComponents()
             .AddInteractiveServerComponents();
 
-        // Add Blazorise services
-        builder.Services
-            .AddBlazorise(options =>
-            {
-                options.Immediate = true;
-            })
-            .AddBootstrap5Providers()
-            .AddFontAwesomeIcons();
+        // Add Radzen services
+        builder.Services.AddRadzenComponents();
 
         var app = builder.Build();
 
