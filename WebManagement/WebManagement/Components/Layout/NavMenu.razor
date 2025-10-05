@@ -1,23 +1,50 @@
-﻿<div class="top-row ps-3 navbar navbar-dark">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="">WebManagement</a>
-    </div>
-</div>
+﻿@inject NavigationManager NavigationManager
+@implements IDisposable
 
-<input type="checkbox" title="Navigation menu" class="navbar-toggler"/>
+<RadzenSidebar Responsive="false" @bind-Expanded="@SidebarExpanded" style="position: absolute; z-index: 3">
+    <RadzenStack AlignItems="AlignItems.End" class="rz-p-2">
+        <RadzenButton Icon="west" Variant="Variant.Text" ButtonStyle="ButtonStyle.Secondary" Click="@ToggleSidebar" />
+    </RadzenStack>
+    <RadzenPanelMenu>
+        <RadzenPanelMenuItem Text="Home" Icon="home" Path="" />
+        <RadzenPanelMenuItem Text="Radzen 範例" Icon="palette" Path="radzen-sample" />
+    </RadzenPanelMenu>
+</RadzenSidebar>
 
-<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
-    <nav class="nav flex-column">
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="" Match="NavLinkMatch.All">
-                <span class="bi bi-house-door-fill-nav-menu" aria-hidden="true"></span> Home
-            </NavLink>
-        </div>
+@if (SidebarExpanded)
+{
+    <div @onclick="@ToggleSidebar" class="rz-dialog-mask" style="position: absolute; z-index: 2"></div>
+}
 
-        <div class="nav-item px-3">
-            <NavLink class="nav-link" href="radzen-sample">
-                <span class="bi bi-palette-fill-nav-menu" aria-hidden="true"></span> Radzen 範例
-            </NavLink>
-        </div>
-    </nav>
-</div>
+@code {
+    [Parameter]
+    public bool SidebarExpanded { get; set; }
+
+    [Parameter]
+    public EventCallback<bool> SidebarExpandedChanged { get; set; }
+
+    protected override void OnInitialized()
+    {
+        NavigationManager.LocationChanged += OnLocationChanged;
+    }
+
+    private async void OnLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        if (SidebarExpanded)
+        {
+            await ToggleSidebar();
+            StateHasChanged();
+        }
+    }
+
+    private async Task ToggleSidebar()
+    {
+        SidebarExpanded = false;
+        await SidebarExpandedChanged.InvokeAsync(SidebarExpanded);
+    }
+
+    public void Dispose()
+    {
+        NavigationManager.LocationChanged -= OnLocationChanged;
+    }
+}
